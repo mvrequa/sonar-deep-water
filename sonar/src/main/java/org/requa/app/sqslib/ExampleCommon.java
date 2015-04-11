@@ -1,4 +1,4 @@
-package org.requa.app;
+package org.requa.app.sqslib;
 
 import org.apache.commons.codec.binary.Base64;
 

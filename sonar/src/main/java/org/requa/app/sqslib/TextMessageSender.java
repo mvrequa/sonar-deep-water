@@ -1,4 +1,4 @@
-package org.requa.app;
+package org.requa.app.sqslib;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
@@ -8,6 +8,11 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import com.amazonaws.regions.Regions;
+import com.amazonaws.regions.Region;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazon.sqs.javamessaging.SQSConnection;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 
@@ -23,11 +28,11 @@ public class TextMessageSender {
         ExampleCommon.setupLogging();
         
         // Create the connection factory based on the config
-        SQSConnectionFactory connectionFactory = 
-                SQSConnectionFactory.builder()
-                    .withRegion(config.getRegion())
-                    .withAWSCredentialsProvider(config.getCredentialsProvider())
-                    .build();
+        SQSConnectionFactory connectionFactory =
+            SQSConnectionFactory.builder()
+                .withRegion(Region.getRegion(Regions.US_EAST_1))
+                .withAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider())
+                .build();
         
         // Create the connection
         SQSConnection connection = connectionFactory.createConnection();

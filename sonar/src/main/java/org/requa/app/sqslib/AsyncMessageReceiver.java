@@ -1,4 +1,4 @@
-package org.requa.app;
+package org.requa.app.sqslib;
 
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;

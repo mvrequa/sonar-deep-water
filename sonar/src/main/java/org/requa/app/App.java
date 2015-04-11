@@ -6,6 +6,10 @@ import org.apache.log4j.Logger;
 
 import javax.jms.JMSException;
 
+import org.requa.app.sqslib.TextMessageSender;
+import org.requa.app.sqslib.AsyncMessageReceiver;
+import org.requa.app.s3lib.UploadObjectSingleOperation;
+import org.requa.app.s3lib.GetObject;
 
 public class App 
 {
@@ -19,13 +23,32 @@ public class App
         App obj = new App();
         obj.runMe("requalog -- 001");
                 
-        SQSReader reader = new SQSReader();
-        reader.createQueue("TestQueue");
+        //SQSReader reader = new SQSReader();
+        //reader.createQueue("TestQueue");
 
         //TextMessageSender tms = new TextMessageSender();
-        //String[] toppings = {"Cheese", "Pepperoni", "Black Olives"};
-        //tms.main(toppings);
+        //tms.main(args);
+        
+        //AsyncMessageReceiver amr = new AsyncMessageReceiver();
+        //try {
+        //    amr.main(args);
+        //} catch (Exception exc) {
+        //    // TODO - handle this
+        //}
+    
+        //UploadObjectSingleOperation uoso = new UploadObjectSingleOperation();
+        //try {
+        //    uoso.main(args);
+        //} catch (IOException ioexc) {
+        //    // TODO - handle this
+        //}
 
+        GetObject getobj = new GetObject();
+        try {
+            getobj.main(args);
+        } catch (IOException ioexc) {
+            // TODO - handle this
+        }
 
     }
     
