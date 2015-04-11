@@ -1,54 +1,48 @@
 package org.requa.app;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
-import javax.jms.JMSSecurityException;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
 
-import com.amazonaws.regions.Regions;
-import com.amazonaws.regions.Region;
-import com.amazonaws.auth.BasicAWSCredentials;
-//import com.amazonaws.services.sqs.AmazonSQS;
-//import com.amazonaws.services.sqs.SQSConnectionFactory;
-//import com.amazonaws.services.sqs.model.*;
 
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
-import com.amazonaws.auth.AWSCredentialsProvider;
-
-import com.amazon.sqs.javamessaging.SQSConnectionFactory;
-import com.amazon.sqs.javamessaging.SQSConnection;
-import com.amazon.sqs.javamessaging.AmazonSQSMessagingClientWrapper;
-/**
- * Hello world!
- *
- */
 public class App 
 {
+    /// This app takes messages out of the SQS queue and saves them in S3, periodically
+
+    final static Logger logger = Logger.getLogger(App.class);
+
     public static void main( String[] args ) throws JMSException
     {
-        System.out.println( "Hello World!" );
-        // Create the connection factory using the environment variable credential provider.
-        // Connections this factory creates can talk to the queues in us-east-1 region. 
-        SQSConnectionFactory connectionFactory =
-        SQSConnectionFactory.builder()
-            .withRegion(Region.getRegion(Regions.US_EAST_1))
-            .withAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider())
-            .build();
+        
+        App obj = new App();
+        obj.runMe("requalog -- 001");
+                
+        SQSReader reader = new SQSReader();
+        reader.createQueue("TestQueue");
+
+        //TextMessageSender tms = new TextMessageSender();
+        //String[] toppings = {"Cheese", "Pepperoni", "Black Olives"};
+        //tms.main(toppings);
+
+
+    }
+    
+        
+    private void runMe(String parameter){
  
-        // Create the connection.
-        SQSConnection connection = connectionFactory.createConnection();
-        // Get the wrapped client
-        AmazonSQSMessagingClientWrapper client = connection.getWrappedAmazonSQSClient();
- 
-        // Create an SQS queue named 'TestQueue' – if it does not already exist.
-        if (!client.queueExists("TestQueue")) {
-            client.createQueue("TestQueue");  
+        if(logger.isDebugEnabled()){
+            logger.debug("This is debug : " + parameter);
         }
+ 
+        if(logger.isInfoEnabled()){
+            logger.info("This is info : " + parameter);
+        }
+ 
+        logger.warn("This is warn : " + parameter);
+        logger.error("This is error : " + parameter);
+        logger.fatal("This is fatal : " + parameter);
  
     }
 }
